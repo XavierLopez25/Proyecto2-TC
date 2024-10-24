@@ -1,0 +1,52 @@
+{
+  "startSymbol": "S",
+  "nonTerminals": ["S", "VP", "PP", "NP", "V", "P", "N", "Det"],
+  "terminals": [
+    "he",
+    "she",
+    "cooks",
+    "drinks",
+    "eats",
+    "cuts",
+    "in",
+    "with",
+    "cat",
+    "dog",
+    "beer",
+    "cake",
+    "juice",
+    "meat",
+    "soup",
+    "fork",
+    "knife",
+    "oven",
+    "spoon",
+    "a",
+    "the"
+  ],
+  "productions": {
+    "S": [["NP", "VP"]],
+    "VP": [
+      ["V", "NP"],
+      ["VP", "PP"]
+    ],
+    "PP": [["P", "NP"]],
+    "NP": [["Det", "N"], ["he"], ["she"]],
+    "V": [["cooks"], ["drinks"], ["eats"], ["cuts"]],
+    "P": [["in"], ["with"]],
+    "N": [
+      ["cat"],
+      ["dog"],
+      ["beer"],
+      ["cake"],
+      ["juice"],
+      ["meat"],
+      ["soup"],
+      ["fork"],
+      ["knife"],
+      ["oven"],
+      ["spoon"]
+    ],
+    "Det": [["a"], ["the"]]
+  }
+}
