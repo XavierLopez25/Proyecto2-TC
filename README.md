@@ -29,6 +29,8 @@
 ### main.py:
 - Para poder utilizar este programa es necesario que se ingrese una _Context Free Grammar (Gramática Libre de Contexto)_
 - Esta se debe de cambiar en este archivo, en la variable llamada ```input_filename```.
+- La gramática de entrada debe de encontrarse en ```grammars/CFG/cfg_grammarX.json```.
+- La gramática en CNF transformada se encontrará en ```grammars/CNF/cnf_grammarX.json```.
 
 ### CFGToCNF.py:
 - Este archivo se encarga de identificar en primera instancia si la gramática ingresada en formato JSON, es de libre contexto o no.
