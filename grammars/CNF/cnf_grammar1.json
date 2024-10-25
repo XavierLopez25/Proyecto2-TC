@@ -1,106 +1,39 @@
 {
   "startSymbol": "S",
   "nonTerminals": [
-    "VP",
-    "N",
-    "V",
-    "Det",
     "NP",
-    "S",
+    "V",
+    "P",
+    "N",
+    "VP",
+    "Det",
     "PP",
-    "P"
+    "S"
   ],
   "terminals": [
-    "knife",
-    "cooks",
-    "beer",
-    "cake",
-    "fork",
-    "juice",
-    "she",
-    "a",
-    "with",
-    "cuts",
-    "drinks",
-    "soup",
-    "he",
     "cat",
-    "in",
-    "oven",
-    "dog",
+    "drinks",
     "meat",
+    "eats",
+    "cake",
+    "a",
     "the",
     "spoon",
-    "eats"
+    "he",
+    "in",
+    "beer",
+    "with",
+    "cuts",
+    "soup",
+    "juice",
+    "she",
+    "fork",
+    "dog",
+    "cooks",
+    "knife",
+    "oven"
   ],
   "productions": {
-    "VP": [
-      [
-        "V",
-        "NP"
-      ],
-      [
-        "VP",
-        "PP"
-      ]
-    ],
-    "N": [
-      [
-        "oven"
-      ],
-      [
-        "fork"
-      ],
-      [
-        "dog"
-      ],
-      [
-        "spoon"
-      ],
-      [
-        "beer"
-      ],
-      [
-        "meat"
-      ],
-      [
-        "knife"
-      ],
-      [
-        "cat"
-      ],
-      [
-        "cake"
-      ],
-      [
-        "soup"
-      ],
-      [
-        "juice"
-      ]
-    ],
-    "V": [
-      [
-        "drinks"
-      ],
-      [
-        "eats"
-      ],
-      [
-        "cooks"
-      ],
-      [
-        "cuts"
-      ]
-    ],
-    "Det": [
-      [
-        "the"
-      ],
-      [
-        "a"
-      ]
-    ],
     "NP": [
       [
         "Det",
@@ -113,16 +46,18 @@
         "she"
       ]
     ],
-    "S": [
+    "V": [
       [
-        "NP",
-        "VP"
-      ]
-    ],
-    "PP": [
+        "eats"
+      ],
       [
-        "P",
-        "NP"
+        "cooks"
+      ],
+      [
+        "cuts"
+      ],
+      [
+        "drinks"
       ]
     ],
     "P": [
@@ -131,6 +66,71 @@
       ],
       [
         "with"
+      ]
+    ],
+    "N": [
+      [
+        "cake"
+      ],
+      [
+        "soup"
+      ],
+      [
+        "knife"
+      ],
+      [
+        "dog"
+      ],
+      [
+        "meat"
+      ],
+      [
+        "spoon"
+      ],
+      [
+        "fork"
+      ],
+      [
+        "oven"
+      ],
+      [
+        "juice"
+      ],
+      [
+        "beer"
+      ],
+      [
+        "cat"
+      ]
+    ],
+    "VP": [
+      [
+        "V",
+        "NP"
+      ],
+      [
+        "VP",
+        "PP"
+      ]
+    ],
+    "Det": [
+      [
+        "a"
+      ],
+      [
+        "the"
+      ]
+    ],
+    "PP": [
+      [
+        "P",
+        "NP"
+      ]
+    ],
+    "S": [
+      [
+        "NP",
+        "VP"
       ]
     ]
   }
