@@ -1,5 +1,6 @@
 import json
 import re
+import time 
 from src.CFGToCNF.CFGToCNF import CFGtoCNFConverter
 from src.CNFToCYK.CNFToCYK import CNFtoCYKConverter
 
@@ -41,8 +42,11 @@ def main():
         # Definir una cadena de entrada
         w = ["she", "eats", "a", "cake"]
 
+        start_time = time.time()  
         # Ejecutar el algoritmo CYK para verificar si la cadena pertenece al lenguaje
         resultado = CNFtoCYKConverter(cnf_grammar, w)
+        end_time = time.time()  
+        execution_time = end_time - start_time  
 
         # Mostrar el resultado de la validación
         if resultado:
@@ -64,5 +68,7 @@ def main():
     else:
         # Informar al usuario que la conversión no fue posible
         print("\nNo se pudo convertir la gramática a CNF porque no es una CFG válida.")
+        
+    print(f"Tiempo de validación con el algoritmo CYK: {execution_time:.4f} segundos.\n")
 
 main()

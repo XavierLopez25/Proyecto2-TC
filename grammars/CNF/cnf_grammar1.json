@@ -2,36 +2,36 @@
   "startSymbol": "S",
   "nonTerminals": [
     "NP",
-    "V",
-    "P",
-    "N",
-    "VP",
-    "Det",
     "PP",
-    "S"
+    "N",
+    "V",
+    "S",
+    "P",
+    "Det",
+    "VP"
   ],
   "terminals": [
-    "cat",
-    "drinks",
-    "meat",
-    "eats",
-    "cake",
-    "a",
-    "the",
-    "spoon",
-    "he",
-    "in",
-    "beer",
-    "with",
-    "cuts",
-    "soup",
     "juice",
-    "she",
-    "fork",
     "dog",
+    "a",
+    "with",
     "cooks",
+    "he",
+    "cake",
+    "spoon",
+    "the",
+    "fork",
+    "beer",
+    "drinks",
+    "eats",
+    "cuts",
+    "meat",
+    "soup",
     "knife",
-    "oven"
+    "oven",
+    "in",
+    "she",
+    "cat"
   ],
   "productions": {
     "NP": [
@@ -46,7 +46,51 @@
         "she"
       ]
     ],
+    "PP": [
+      [
+        "P",
+        "NP"
+      ]
+    ],
+    "N": [
+      [
+        "cat"
+      ],
+      [
+        "fork"
+      ],
+      [
+        "dog"
+      ],
+      [
+        "juice"
+      ],
+      [
+        "soup"
+      ],
+      [
+        "meat"
+      ],
+      [
+        "beer"
+      ],
+      [
+        "cake"
+      ],
+      [
+        "knife"
+      ],
+      [
+        "oven"
+      ],
+      [
+        "spoon"
+      ]
+    ],
     "V": [
+      [
+        "drinks"
+      ],
       [
         "eats"
       ],
@@ -55,9 +99,12 @@
       ],
       [
         "cuts"
-      ],
+      ]
+    ],
+    "S": [
       [
-        "drinks"
+        "NP",
+        "VP"
       ]
     ],
     "P": [
@@ -68,51 +115,6 @@
         "with"
       ]
     ],
-    "N": [
-      [
-        "cake"
-      ],
-      [
-        "soup"
-      ],
-      [
-        "knife"
-      ],
-      [
-        "dog"
-      ],
-      [
-        "meat"
-      ],
-      [
-        "spoon"
-      ],
-      [
-        "fork"
-      ],
-      [
-        "oven"
-      ],
-      [
-        "juice"
-      ],
-      [
-        "beer"
-      ],
-      [
-        "cat"
-      ]
-    ],
-    "VP": [
-      [
-        "V",
-        "NP"
-      ],
-      [
-        "VP",
-        "PP"
-      ]
-    ],
     "Det": [
       [
         "a"
@@ -121,16 +123,14 @@
         "the"
       ]
     ],
-    "PP": [
+    "VP": [
       [
-        "P",
+        "VP",
+        "PP"
+      ],
+      [
+        "V",
         "NP"
-      ]
-    ],
-    "S": [
-      [
-        "NP",
-        "VP"
       ]
     ]
   }
