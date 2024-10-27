@@ -1,8 +1,10 @@
 import json
 import re
+import os
 import time 
 from src.CFGToCNF.CFGToCNF import CFGtoCNFConverter
 from src.CNFToCYK.CNFToCYK import CNFtoCYKConverter
+from src.CYKToParseTree import CYKToParseTree
 
 def main():
     # Nombre del archivo de entrada (CFG)
@@ -44,12 +46,12 @@ def main():
 
         start_time = time.time()  
         # Ejecutar el algoritmo CYK para verificar si la cadena pertenece al lenguaje
-        resultado = CNFtoCYKConverter(cnf_grammar, w)
+        table, is_valid = CNFtoCYKConverter(cnf_grammar, w)
         end_time = time.time()  
         execution_time = end_time - start_time  
 
         # Mostrar el resultado de la validación
-        if resultado:
+        if is_valid:
             print(f"La cadena '{' '.join(w)}' SÍ pertenece al lenguaje generado por la gramática.\n")
         else:
             print(f"La cadena '{' '.join(w)}' NO pertenece al lenguaje generado por la gramática.\n")
@@ -58,17 +60,34 @@ def main():
         cyk_output_filename = f'cyk_result_{number}.json'
         cyk_result = {
             "cadena": " ".join(w),
-            "resultado": "SI" if resultado else "NO"
+            "resultado": "SI" if is_valid else "NO"
         }
         with open(f'grammars/CYK/{cyk_output_filename}', 'w') as file:
             json.dump(cyk_result, file, indent=2)
 
         print(f"El resultado del análisis CYK se ha guardado en '{cyk_output_filename}'.")
 
+        if is_valid:
+            parse_tree = CYKToParseTree.build_parse_tree(table, cnf_grammar, w)
+            if parse_tree:
+                output_dir = 'grammars/ParseTreeCYK'
+                if not os.path.exists(output_dir):
+                    os.makedirs(output_dir)
+
+                parse_tree_output_filename = f'parse_tree_result{number}'
+                print("\nÁrbol de análisis encontrado.")
+                tree_graph = CYKToParseTree.visualize_parse_tree(parse_tree)
+                tree_graph.render(os.path.join(output_dir, parse_tree_output_filename), format='png', view=True)
+
+            else:
+                print("No se pudo construir un árbol de análisis.")
+        else:
+            print("La cadena no pertenece al lenguaje generado por la gramática.")
+
     else:
         # Informar al usuario que la conversión no fue posible
         print("\nNo se pudo convertir la gramática a CNF porque no es una CFG válida.")
         
-    print(f"Tiempo de validación con el algoritmo CYK: {execution_time:.4f} segundos.\n")
+    print(f"\nTiempo de validación con el algoritmo CYK: {execution_time:.4f} segundos.\n")
 
 main()

@@ -1,10 +1,11 @@
 def CNFtoCYKConverter(cnf_grammar, w):
     n = len(w)
     if n == 0:
-        return cnf_grammar["startSymbol"] in cnf_grammar.get("epsilon", set())
+        return [], False  # Retorna tabla vacía y falso
+
 
     # Inicializar la tabla CYK
-    table = [[set() for _ in range(n)] for _ in range(n)]
+    table = [[[] for _ in range(n)] for _ in range(n)]
     productions = cnf_grammar["productions"]
 
     # Rellenar la tabla para las subcadenas de longitud 1 (los terminales)
@@ -12,7 +13,8 @@ def CNFtoCYKConverter(cnf_grammar, w):
         for lhs, rhs_list in productions.items():
             for rhs in rhs_list:
                 if len(rhs) == 1 and rhs[0] == w[i]:
-                    table[i][i].add(lhs)
+                    # Asegúrate de añadir correctamente los nodos terminales como hijos una sola vez
+                    table[i][i].append({"symbol": lhs, "children": [{"symbol": rhs[0], "children": []}]})
 
     # Rellenar la tabla para subcadenas de longitud > 1
     for l in range(2, n + 1):  # Longitud de la subcadena
@@ -23,9 +25,12 @@ def CNFtoCYKConverter(cnf_grammar, w):
                     for rhs in rhs_list:
                         if len(rhs) == 2:
                             B, C = rhs
-                            if B in table[i][k] and C in table[k + 1][j]:
-                                table[i][j].add(lhs)
+                            left = [entry for entry in table[i][k] if entry["symbol"] == B]
+                            right = [entry for entry in table[k+1][j] if entry["symbol"] == C]
+                            for left_entry in left:
+                                for right_entry in right:
+                                    table[i][j].append({"symbol": lhs, "children": [left_entry, right_entry]})
 
     # Verificar si el símbolo inicial está en la posición [0][n-1]
-    return cnf_grammar["startSymbol"] in table[0][n - 1]
-
+    contains_start_symbol = any(entry["symbol"] == cnf_grammar["startSymbol"] for entry in table[0][n-1])
+    return table, contains_start_symbol
