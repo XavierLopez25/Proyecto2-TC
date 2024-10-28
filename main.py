@@ -1,7 +1,7 @@
 import json
 import re
 import os
-import time 
+import time
 from src.CFGToCNF.CFGToCNF import CFGtoCNFConverter
 from src.CNFToCYK.CNFToCYK import CNFtoCYKConverter
 from src.CYKToParseTree import CYKToParseTree
@@ -33,41 +33,45 @@ def main():
         with open(f'grammars/CNF/{output_filename}', 'w') as file:
             json.dump(cnf_grammar, file, indent=2)
 
-        # Informar al usuario que el proceso ha finalizado
-        print(f"\n\nLa gramática ha sido convertida a CNF y guardada en '{output_filename}'.\n\n")
+        print("+-" * 40, end='+\n')
+        print(f"\nLa gramática ha sido convertida a CNF y guardada en '{output_filename}'.\n")
+        print("+-" * 40, end='+')
 
         # Cargar la gramática CNF para usarla en el algoritmo CYK
         cnf_input_filename = f'grammars/CNF/{output_filename}'
         with open(cnf_input_filename, 'r') as file:
             cnf_grammar = json.load(file)
 
-        # Definir una cadena de entrada
-        w = ["she", "eats", "a", "cake"]
+        # Solicitar la cadena de entrada al usuario
+        w = input("\n\nIngrese una cadena (separada por espacios): ").split()
 
-        start_time = time.time()  
+        os.system('clear')
+
+        # Medir el tiempo de todo el proceso de validación
+        start_time = time.perf_counter()
+
         # Ejecutar el algoritmo CYK para verificar si la cadena pertenece al lenguaje
         table, is_valid = CNFtoCYKConverter(cnf_grammar, w)
-        end_time = time.time()  
-        execution_time = end_time - start_time  
 
         # Mostrar el resultado de la validación
         if is_valid:
-            print(f"La cadena '{' '.join(w)}' SÍ pertenece al lenguaje generado por la gramática.\n")
-        else:
-            print(f"La cadena '{' '.join(w)}' NO pertenece al lenguaje generado por la gramática.\n")
+            print("+-" * 40, end='+\n')
+            print(f"\nLa cadena '{' '.join(w)}' SÍ pertenece al lenguaje generado por la gramática. ✅\n")
+            print("+-" * 40, end='+\n')
 
-        # Guardar el resultado del algoritmo CYK en un archivo JSON
-        cyk_output_filename = f'cyk_result_{number}.json'
-        cyk_result = {
-            "cadena": " ".join(w),
-            "resultado": "SI" if is_valid else "NO"
-        }
-        with open(f'grammars/CYK/{cyk_output_filename}', 'w') as file:
-            json.dump(cyk_result, file, indent=2)
+            # Guardar el resultado del algoritmo CYK en un archivo JSON
+            cyk_output_filename = f'cyk_result_{number}.json'
+            cyk_result = {
+                "cadena": " ".join(w),
+                "resultado": "SI"
+            }
+            with open(f'grammars/CYK/{cyk_output_filename}', 'w') as file:
+                json.dump(cyk_result, file, indent=2)
 
-        print(f"El resultado del análisis CYK se ha guardado en '{cyk_output_filename}'.")
+            print(f"\nEl resultado del análisis CYK se ha guardado en '{cyk_output_filename}'.\n")
+            print("+-" * 40, end='+\n')
 
-        if is_valid:
+            # Construir el árbol de análisis si la cadena pertenece al lenguaje
             parse_tree = CYKToParseTree.build_parse_tree(table, cnf_grammar, w)
             if parse_tree:
                 output_dir = 'grammars/ParseTreeCYK'
@@ -76,18 +80,26 @@ def main():
 
                 parse_tree_output_filename = f'parse_tree_result{number}'
                 print("\nÁrbol de análisis encontrado.")
+                print("-" * 81)
                 tree_graph = CYKToParseTree.visualize_parse_tree(parse_tree)
                 tree_graph.render(os.path.join(output_dir, parse_tree_output_filename), format='png', view=True)
-
+                print(" ")
             else:
-                print("No se pudo construir un árbol de análisis.")
+                print("\n No se pudo construir un árbol de análisis.")
         else:
-            print("La cadena no pertenece al lenguaje generado por la gramática.")
+            print("+-" * 40, end='+\n')
+            print(f"\nLa cadena '{' '.join(w)}' NO pertenece al lenguaje generado por la gramática. ❌\n")
+            print("+-" * 40, end='+\n')
+            return 
+
+        end_time = time.perf_counter()
+        execution_time = end_time - start_time
+        print("+-" * 40, end='+\n')
+        print(f"\n ⌛️ Tiempo de ejecución total: {execution_time:.8f} segundos.\n")
+        print("+-" * 40, end='+\n')
 
     else:
-        # Informar al usuario que la conversión no fue posible
         print("\nNo se pudo convertir la gramática a CNF porque no es una CFG válida.")
-        
-    print(f"\nTiempo de validación con el algoritmo CYK: {execution_time:.4f} segundos.\n")
 
-main()
+if __name__ == "__main__":
+    main()
