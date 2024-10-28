@@ -13,7 +13,6 @@ def CNFtoCYKConverter(cnf_grammar, w):
         for lhs, rhs_list in productions.items():
             for rhs in rhs_list:
                 if len(rhs) == 1 and rhs[0] == w[i]:
-                    # Asegúrate de añadir correctamente los nodos terminales como hijos una sola vez
                     table[i][i].append({"symbol": lhs, "children": [{"symbol": rhs[0], "children": []}]})
 
     # Rellenar la tabla para subcadenas de longitud > 1
