@@ -71,6 +71,11 @@ def main():
             print(f"\nEl resultado del análisis CYK se ha guardado en '{cyk_output_filename}'.\n")
             print("+-" * 40, end='+\n')
 
+            print("\n La tabla del CYK es: \n")
+            print(table)
+        
+            print("+-" * 40, end='+\n')
+
             # Construir el árbol de análisis si la cadena pertenece al lenguaje
             parse_tree = CYKToParseTree.build_parse_tree(table, cnf_grammar, w)
             if parse_tree:
